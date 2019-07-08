@@ -215,7 +215,7 @@ print(a)
 
 
 Some pointers :
-* `@` in python is an opeartor for matrix multiplication (`@=` is the inplace version)
+* `@` in python is an operator for matrix multiplication (`@=` is the inplace version)
 * `*` is elementwise product between two matrices or vectors
 
 No we perform matrix multiplication between the parameters and x as follows,
