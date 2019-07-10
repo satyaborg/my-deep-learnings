@@ -1,15 +1,20 @@
 # my-deep-learnings
-Repository to keep track of my experiments, exploration and understanding in the field of machine and deep learning.
 
-## Neural Networks
+Repository to keep track of my exploration, experiments and understanding in the field of machine and deep learning.
 
-1. Tensors
-2. Stochastic Gradient Descent (SGD)
-3. Backpropagation
+I.  Delving into the theory : Original paper (if available), relevant cited works and blogs
+II. Implementation of the ideas
 
-## Computer Vision
+## Computer Vision 👁️‍🗨️
 
-> Coarse grained to fine grained problems in CV domain are as follows : 
+### Architectures
+
+1. Convolutional Neural Network (CNN)
+2. Fast RCNN
+3. Mask RCNN
+4. U-Net
+
+> From coarse grained to fine grained CV tasks explored : 
 
 1. Image Classification (Single/Multi-label)
 2. Object Detection (and Localization)
@@ -21,12 +26,29 @@ Classification/segmentation is most common in vision based applications.
 
 Regression in the context of images (or video frames) refers to predicting a continuous value for the target for e.g. detecting the human pose involves outputting the location of several skeletal keypoints such as (x,y).
 
-## Natural Language Processing
+## Natural Language Processing 📜
 
-## Frameworks used for exploration :
+### Architectures
+
+1. Recurrent Neural Network (RNN)
+2. Gated Recurrent Unit (GRU)
+3. Long Short-Term Memory (LSTM)
+
+> NLP tasks :
+
+1. Text classification
+2. Topic Modeling 
+3. Sentiment Analysis 
+
+## Frameworks used :
 
 1. PyTorch
 2. fastai
 3. TensorFlow
 4. keras
 
+## Resources
+
+1. https://www.fast.ai/
+2. http://neuralnetworksanddeeplearning.com/
+3. https://www.deeplearningbook.org/
