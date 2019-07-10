@@ -228,7 +228,7 @@ src = (SegmentationItemList.from_folder(path_img)
        .label_from_func(get_y_fn, classes=codes))
 ```
 
-* `tfm_y` : Apply same transformations to y that was applied to x
+`tfm_y` : Apply same transformations to y that was applied to x
 
 
 ```
@@ -248,15 +248,11 @@ data.show_batch(2, figsize=(7,7))
 
 ## Model
 
-> Downsampling images and then training  64x64 -> 128x128 -> 256x256 helps to :
-1. Trains much faster 
-2. Generalize much better
-
+> Notes : 
+* Downsampling images and then training  64x64 -> 128x128 -> 256x256 helps to train much faster and  generalize much better.
 * Also called progressive resizing
 * Going under 64x64 does not help as much
-
 * We can pass vanilla accuracy as a metric for segmentation i.e. number of pixels correctly classified / total number of pixels
-
 * Some of the pixel labels are **void** in camvid. Reporting accuracy should be done after removing void pixels.
 
 
@@ -574,7 +570,7 @@ free = gpu_mem_get_free_no_cache(); free
 
 
 
-Batch size (depending on GPU memory)
+Set batch size (depending on GPU memory)
 
 
 ```
@@ -587,8 +583,6 @@ src = (SegmentationItemList.from_folder(path_img)
        .split_by_fname_file('../valid.txt')
        .label_from_func(get_y_fn, classes=codes))
 ```
-
-* `tfm_y` : Apply same transformations to y that was applied to x
 
 
 ```
@@ -603,15 +597,14 @@ data.show_batch(2, figsize=(7,7))
 ```
 
 
-![png](image_segmentation_files/image_segmentation_60_0.png)
+![png](image_segmentation_files/image_segmentation_59_0.png)
 
 
 ## Mixed precision training
 
 Instead of using single precision floating points, use half precision floating points i.e. 32 bits to 16 bits. This increases speed of operations and consumes less GPU RAM (useful when running out of GPU memory).
 
-* The term double precision is something of a misnomer because the precision is not really double.
-The word double derives from the fact that a double-precision number uses twice as many bits as a regular floating-point number (source : https://stackoverflow.com/questions/801117/whats-the-difference-between-a-single-precision-and-double-precision-floating-p)
+* A double-precision number uses twice as many bits as a regular floating-point number (source : https://stackoverflow.com/questions/801117/whats-the-difference-between-a-single-precision-and-double-precision-floating-p)
 * Add `.to_fp16()` at the end of learner to use half precision floating points.
 
 
@@ -631,6 +624,8 @@ learn.load('stage-2-resnet34');
 # learn.summary()
 ```
 
+### Find optimal learning rate
+
 
 ```
 learn.lr_find()
@@ -640,6 +635,8 @@ learn.lr_find()
 ```
 learn.recorder.plot
 ```
+
+### Train
 
 
 ```
@@ -654,3 +651,5 @@ learn.fit_one_cycle(5, max_lr=lr)
 * Increasing the LR gradually actually leads to greater exploration of the loss landscape and increases the probability of finding the optimal weights. Also leads to faster training/convergence and better generalization overall. 
 
 ## References
+
+[1] fast.ai v3 Part 1 Lesson 3 https://course.fast.ai/videos/?lesson=3
