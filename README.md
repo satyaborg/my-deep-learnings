@@ -5,7 +5,7 @@ Repository to keep track of my exploration, experiments and understanding in the
 I.  Delving into the theory : Original paper (if available), relevant cited works and blogs
 II. Implementation of the ideas
 
-## Computer Vision 👁️‍🗨️
+## Computer Vision 👁️
 
 ### Architectures
 
