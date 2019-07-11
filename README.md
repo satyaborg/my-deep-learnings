@@ -2,8 +2,8 @@
 
 Repository to keep track of my exploration, experiments and understanding in the field of machine and deep learning.
 
-I.  Delving into the theory : Original paper (if available), relevant cited works and blogs
-II. Implementation of the ideas
+- Delving into the theory : Original paper(s) (if available), relevant cited works and blogs.
+- Code implementation of the ideas.
 
 ## Computer Vision 👁️
 
