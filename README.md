@@ -16,15 +16,16 @@ Repository to keep track of my exploration, experiments and understanding in the
 
 > From coarse grained to fine grained CV tasks explored : 
 
-1. Image Classification (Single/Multi-label)
+1. Image Classification
+	a. Single-label 
+	b. Multi-label
 2. Object Detection (and Localization)
-3. Semantic Segmentation
-4. Instance Segmentation
-5. Pose Estimation
+3. Image Segmentation 
+	a. Semantic Segmentation
+	b. Instance Segmentation
+5. Image Regression - predicting a continuous value for the target for e.g. detecting the human pose involves outputting the location (x,y) of skeletal keypoints in a given frame.
 
 Classification/segmentation is most common in vision based applications.
-
-Regression in the context of images (or video frames) refers to predicting a continuous value for the target for e.g. detecting the human pose involves outputting the location of several skeletal keypoints such as (x,y).
 
 ## Natural Language Processing 📜
 
@@ -37,8 +38,10 @@ Regression in the context of images (or video frames) refers to predicting a con
 > NLP tasks :
 
 1. Text classification
+	a. Sentiment Analysis
 2. Topic Modeling 
-3. Sentiment Analysis 
+
+Transfer learning in NLP : Fine tuning a pretrained language model (e.g. WikiText 103) on a domain specific corpus (i.e. Yelp, IMDb) and then using the encodings to train a text classifier.
 
 ## Frameworks used :
 
