@@ -17,12 +17,12 @@ Repository to keep track of my exploration, experiments and understanding in the
 > From coarse grained to fine grained CV tasks explored : 
 
 1. Image Classification
-	a. Single-label 
-	b. Multi-label
+  * Single-label 
+  * Multi-label
 2. Object Detection (and Localization)
 3. Image Segmentation 
-	a. Semantic Segmentation
-	b. Instance Segmentation
+  * Semantic Segmentation
+  * Instance Segmentation
 5. Image Regression - predicting a continuous value for the target for e.g. detecting the human pose involves outputting the location (x,y) of skeletal keypoints in a given frame.
 
 Classification/segmentation is most common in vision based applications.
@@ -38,7 +38,7 @@ Classification/segmentation is most common in vision based applications.
 > NLP tasks :
 
 1. Text classification
-	a. Sentiment Analysis
+  * Sentiment Analysis
 2. Topic Modeling 
 
 Transfer learning in NLP : Fine tuning a pretrained language model (e.g. WikiText 103) on a domain specific corpus (i.e. Yelp, IMDb) and then using the encodings to train a text classifier.
