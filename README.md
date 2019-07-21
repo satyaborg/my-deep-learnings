@@ -1,6 +1,6 @@
 # my-deep-learnings
 
-Repository to keep track of my exploration, experiments and understanding in the field of machine and deep learning.
+Repository to keep track of my exploration, experiments and learnings.
 
 - Delving into the theory : Original paper(s) (if available), relevant cited works and blogs.
 - Code implementation of the ideas.
