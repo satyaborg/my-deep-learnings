@@ -43,6 +43,13 @@ Classification/segmentation is most common in vision based applications.
 
 Transfer learning in NLP : Fine tuning a pretrained language model (e.g. WikiText 103) on a domain specific corpus (i.e. Yelp, IMDb) and then using the encodings to train a text classifier.
 
+## Unsupervised Deep Learning
+
+1. Autoencoders (AE)
+  * Stacked AE
+  * Denoising AE
+  * Variational AE
+
 ## Frameworks used :
 
 1. PyTorch
