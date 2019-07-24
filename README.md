@@ -57,6 +57,11 @@ Transfer learning in NLP : Fine tuning a pretrained language model (e.g. WikiTex
 3. TensorFlow
 4. keras
 
+## Enviroment :
+
+1. Google Colab
+2. Jupyter
+
 ## Resources
 
 1. https://www.fast.ai/
