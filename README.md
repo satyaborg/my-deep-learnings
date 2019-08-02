@@ -10,7 +10,7 @@ Repository to keep track of my exploration, experiments and learnings.
 ### Architectures
 
 1. Convolutional Neural Network (CNN)
-2. Fast RCNN
+2. Residual Networks (ResNets)
 3. Mask RCNN
 4. U-Net
 
@@ -43,24 +43,25 @@ Classification/segmentation is most common in vision based applications.
 
 Transfer learning in NLP : Fine tuning a pretrained language model (e.g. WikiText 103) on a domain specific corpus (i.e. Yelp, IMDb) and then using the encodings to train a text classifier.
 
-## Unsupervised Deep Learning
+## Unsupervised/Self supervised/Generative Deep Learning
 
 1. Autoencoders (AE)
   * Stacked AE
   * Denoising AE
   * Variational AE
 
+2. Generative Adversarial Networks (GANs)
+
 ## Frameworks used :
 
 1. PyTorch
 2. fastai
-3. TensorFlow
-4. keras
 
 ## Enviroment :
 
 1. Google Colab
-2. Jupyter
+2. Jupyter Notebook
+3. Python 3
 
 ## Resources
 
