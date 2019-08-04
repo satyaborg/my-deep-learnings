@@ -8,14 +8,14 @@ Each pixel is classified as one of the possible classes. Segmentation is basical
 * Source : http://mi.eng.cam.ac.uk/research/projects/VideoRec/CamVid/
 
 
-```
+```python
 %reload_ext autoreload
 %autoreload 2
 %matplotlib inline
 ```
 
 
-```
+```python
 from fastai import *
 from fastai.vision import *
 from fastai.callbacks.hooks import *
@@ -23,7 +23,7 @@ from fastai.utils.mem import *
 ```
 
 
-```
+```python
 path = untar_data(URLs.CAMVID)
 path.ls()
 ```
@@ -39,13 +39,13 @@ path.ls()
 
 
 
-```
+```python
 path_lbl = path/'labels'
 path_img = path/'images'
 ```
 
 
-```
+```python
 path_img
 ```
 
@@ -57,7 +57,7 @@ path_img
 
 
 
-```
+```python
 fnames = get_image_files(path_img)
 fnames[:3]
 ```
@@ -72,7 +72,7 @@ fnames[:3]
 
 
 
-```
+```python
 lbl_names = get_image_files(path_lbl)
 lbl_names[:3]
 ```
@@ -87,7 +87,7 @@ lbl_names[:3]
 
 
 
-```
+```python
 img_f = fnames[5]
 img = open_image(img_f) # opens the image
 img.show(figsize=(5,5)) # displays the image
@@ -98,12 +98,12 @@ img.show(figsize=(5,5)) # displays the image
 
 
 
-```
+```python
 get_y_fn = lambda x : path_lbl/f'{x.stem}_P{x.suffix}'
 ```
 
 
-```
+```python
 get_y_fn(img_f)
 ```
 
@@ -119,7 +119,7 @@ get_y_fn(img_f)
 > Difference between `open_image` and `open_mask` is that the mask values are not floats (they are integers) hence the image turns out to be B&W with `open_image`.
 
 
-```
+```python
 mask = open_image(get_y_fn(img_f))
 mask.show(figsize=(5,5), alpha=1)
 ```
@@ -129,7 +129,7 @@ mask.show(figsize=(5,5), alpha=1)
 
 
 
-```
+```python
 mask = open_mask(get_y_fn(img_f))
 mask.show(figsize=(5,5), alpha=1)
 ```
@@ -147,7 +147,7 @@ mask.show(figsize=(5,5), alpha=1)
 
 
 
-```
+```python
 src_size = np.array(mask.shape[1:])
 src_size, mask.data
 ```
@@ -166,7 +166,7 @@ src_size, mask.data
 
 
 
-```
+```python
 codes = np.loadtxt(path/'codes.txt', dtype=str)
 codes
 ```
@@ -184,7 +184,7 @@ codes
 ## Building model
 
 
-```
+```python
 size= src_size // 2; size
 ```
 
@@ -196,7 +196,7 @@ size= src_size // 2; size
 
 
 
-```
+```python
 free = gpu_mem_get_free_no_cache(); free
 ```
 
@@ -210,7 +210,7 @@ free = gpu_mem_get_free_no_cache(); free
 Batch size (depending on GPU memory)
 
 
-```
+```python
 bs = 8 if free > 8200 else 4; bs
 ```
 
@@ -222,7 +222,7 @@ bs = 8 if free > 8200 else 4; bs
 
 
 
-```
+```python
 src = (SegmentationItemList.from_folder(path_img)
        .split_by_fname_file('../valid.txt')
        .label_from_func(get_y_fn, classes=codes))
@@ -231,14 +231,14 @@ src = (SegmentationItemList.from_folder(path_img)
 `tfm_y` : Apply same transformations to y that was applied to x
 
 
-```
+```python
 data = (src.transform(get_transforms(), size=size, tfm_y=True)
         .databunch(bs=bs)
         .normalize(imagenet_stats))
 ```
 
 
-```
+```python
 data.show_batch(2, figsize=(7,7))
 ```
 
@@ -256,7 +256,7 @@ data.show_batch(2, figsize=(7,7))
 * Some of the pixel labels are **void** in camvid. Reporting accuracy should be done after removing void pixels.
 
 
-```
+```python
 name2id = {v : k for k,v in enumerate(codes)}; name2id
 ```
 
@@ -299,12 +299,12 @@ name2id = {v : k for k,v in enumerate(codes)}; name2id
 
 
 
-```
+```python
 void_code = name2id['Void']
 ```
 
 
-```
+```python
 def acc_camvid(input, target):
     target = target.squeeze(1)
     mask = target != void_code # To handle void pixel labels
@@ -318,8 +318,22 @@ def acc_camvid(input, target):
 * Paper : https://arxiv.org/abs/1505.04597
 * Site : https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/
 
+### U-net
 
-```
+- Starting with a resnet34
+- U-net architecture starts with regular convs i.e. the downsampling path
+- And then deconvolutions or a transpose convolution!
+- How to upsample? Stride 1/2!
+- https://arxiv.org/abs/1603.07285 (maybe a bad way to do it!)
+- Alternate way is we can do nearest neighbour interpolation and then a stride 1 conv
+- Or bilinear interpolation and stride 1 conv
+- fast.ai does subpixel samples
+- Added skipped connections corresponding to the upsample/downsample path (https://arxiv.org/abs/1505.04597)
+- Can treat the components as encoder and decoder
+- Identity connections either with a `+` or `concat`
+
+
+```python
 learn = unet_learner(data, models.resnet34, metrics=acc_camvid)
 ```
 
@@ -328,7 +342,7 @@ learn = unet_learner(data, models.resnet34, metrics=acc_camvid)
 
 
 
-```
+```python
 learn.lr_find()
 ```
 
@@ -346,7 +360,7 @@ learn.lr_find()
 * Increasing the learning rate gradually at the beginning allows wider exploration of the loss surface to find a global optima that generalizes better.
 
 
-```
+```python
 learn.recorder.plot(suggestion=True)
 ```
 
@@ -355,16 +369,16 @@ learn.recorder.plot(suggestion=True)
 
 
 
-![png](image_segmentation_files/image_segmentation_38_1.png)
+![png](image_segmentation_files/image_segmentation_39_1.png)
 
 
 
-```
+```python
 lr = 2e-04
 ```
 
 
-```
+```python
 learn.fit_one_cycle(5, max_lr=slice(lr))
 ```
 
@@ -420,22 +434,22 @@ learn.fit_one_cycle(5, max_lr=slice(lr))
 
 
 
-```
+```python
 learn.save('stage-1-resnet34')
 ```
 
 
-```
+```python
 # learn.load('stage-1-resent34')
 ```
 
 
-```
+```python
 learn.unfreeze()
 ```
 
 
-```
+```python
 learn.lr_find()
 ```
 
@@ -447,21 +461,21 @@ learn.lr_find()
 
 
 
-```
+```python
 learn.recorder.plot()
 ```
 
 
-![png](image_segmentation_files/image_segmentation_45_0.png)
+![png](image_segmentation_files/image_segmentation_46_0.png)
 
 
 
-```
+```python
 lrs = slice(1e-06, lr/5) # 1e-05 would have worked as well
 ```
 
 
-```
+```python
 learn.fit_one_cycle(5, max_lr=lrs)
 ```
 
@@ -517,17 +531,8 @@ learn.fit_one_cycle(5, max_lr=lrs)
 
 
 
-```
+```python
 learn.recorder.plot_losses()
-```
-
-
-![png](image_segmentation_files/image_segmentation_48_0.png)
-
-
-
-```
-learn.recorder.plot_lr()
 ```
 
 
@@ -535,14 +540,23 @@ learn.recorder.plot_lr()
 
 
 
+```python
+learn.recorder.plot_lr()
 ```
+
+
+![png](image_segmentation_files/image_segmentation_50_0.png)
+
+
+
+```python
 learn.save('stage-2-resnet34')
 ```
 
 ## Training on full-size images (all pixels)
 
 
-```
+```python
 src_size
 ```
 
@@ -554,12 +568,12 @@ src_size
 
 
 
-```
+```python
 size = src_size
 ```
 
 
-```
+```python
 free = gpu_mem_get_free_no_cache(); free
 ```
 
@@ -573,31 +587,31 @@ free = gpu_mem_get_free_no_cache(); free
 Set batch size (depending on GPU memory)
 
 
-```
+```python
 bs = 4 # reduce batch size since all the pixels from the original are considered
 ```
 
 
-```
+```python
 src = (SegmentationItemList.from_folder(path_img)
        .split_by_fname_file('../valid.txt')
        .label_from_func(get_y_fn, classes=codes))
 ```
 
 
-```
+```python
 data = (src.transform(get_transforms(), size=size, tfm_y=True)
         .databunch(bs=bs)
         .normalize(imagenet_stats))
 ```
 
 
-```
+```python
 data.show_batch(2, figsize=(7,7))
 ```
 
 
-![png](image_segmentation_files/image_segmentation_59_0.png)
+![png](image_segmentation_files/image_segmentation_60_0.png)
 
 
 ## Mixed precision training
@@ -608,38 +622,38 @@ Instead of using single precision floating points, use half precision floating p
 * Add `.to_fp16()` at the end of learner to use half precision floating points.
 
 
-```
+```python
 learn = unet_learner(data, models.resnet34, metrics=acc_camvid).to_fp16()
 ```
 
 ### Load the pretrained model (trained on half of the pixels)
 
 
-```
+```python
 learn.load('stage-2-resnet34');
 ```
 
 
-```
+```python
 # learn.summary()
 ```
 
 ### Find optimal learning rate
 
 
-```
+```python
 learn.lr_find()
 ```
 
 
-```
+```python
 learn.recorder.plot
 ```
 
 ### Train
 
 
-```
+```python
 learn.fit_one_cycle(5, max_lr=lr)
 ```
 
