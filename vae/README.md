@@ -13,6 +13,7 @@
 
 > Variational Approximation -> Deep Latent Variable Models -> Variational Autoencoding
 
+- Explanation #2 : https://towardsdatascience.com/intuitively-understanding-variational-autoencoders-1bfe67eb5daf
 
 
 Probabilistic Graphical methods
@@ -37,7 +38,7 @@ System is a collection of random variables (RVs) : Observations and Latent Varia
 ## Code
 
 
-```
+```python
 from google.colab import drive
 drive.mount('/content/drive')
 ```
@@ -50,13 +51,13 @@ drive.mount('/content/drive')
 
 
 
-```
+```python
 # path = Path('drive/My Drive/vae')
 path = 'drive/My Drive/vae/'
 ```
 
 
-```
+```python
 ls '{path}'
 ```
 
@@ -64,7 +65,7 @@ ls '{path}'
 
 
 
-```
+```python
 from __future__ import print_function
 import argparse
 import torch
@@ -87,7 +88,7 @@ import matplotlib.pyplot as plt
 ## Hyperparameters
 
 
-```
+```python
 batch_size = 128
 lr = 1e-3
 epochs = 5
@@ -102,7 +103,7 @@ kwargs = {'num_workers': 4, 'pin_memory': True} if cuda else {}
 ## Dataloaders
 
 
-```
+```python
 train_loader = torch.utils.data.DataLoader(
     datasets.MNIST('../data', train=True, download=True,
                    transform=transforms.ToTensor()),
@@ -118,7 +119,7 @@ test_loader = torch.utils.data.DataLoader(
 - `torch.rand_like` : Returns a tensor with the same size as `input` that is filled with random numbers from a uniform distribution on the interval `[0, 1)`.
 
 
-```
+```python
 class VAE(nn.Module):
     def __init__(self):
         super(VAE, self).__init__() # calls the __init__ of the parent class
@@ -162,7 +163,7 @@ class VAE(nn.Module):
 ### Model initialization + optimizer
 
 
-```
+```python
 model = VAE().to(device)
 optimizer = optim.Adam(model.parameters(), lr=lr)
 ```
@@ -170,7 +171,7 @@ optimizer = optim.Adam(model.parameters(), lr=lr)
 ### Loss function
 
 
-```
+```python
 # Reconstruction + KL divergence losses summed over all elements and batch
 def loss_function(recon_x, x, mu, logvar):
     BCE = F.binary_cross_entropy(recon_x, x.view(-1, 784), reduction='sum')
@@ -187,7 +188,7 @@ def loss_function(recon_x, x, mu, logvar):
 ## Training and Testing
 
 
-```
+```python
 def train(epoch):
     
     model.train()
@@ -258,7 +259,7 @@ def test(epoch):
 ## Training Loop
 
 
-```
+```python
 for epoch in range(1, epochs + 1):
     train(epoch)
     test(epoch)
@@ -544,7 +545,7 @@ for epoch in range(1, epochs + 1):
 ## Sampling
 
 
-```
+```python
 plt.figure(figsize = (10,8))
 with torch.no_grad():
     n = 64
@@ -561,7 +562,7 @@ with torch.no_grad():
 
 
 
-```
+```python
 s = model.decode(torch.randn([3,20], device="cuda")) # choosing 3 samples
 s = s.view(-1, 28, 28); s.size()
 ```
@@ -574,7 +575,7 @@ s = s.view(-1, 28, 28); s.size()
 
 
 
-```
+```python
 for i in range(s.size(0)) : 
     plt.imshow(s[i,:,:].detach().cpu().numpy(), cmap="gray");
     plt.show();
