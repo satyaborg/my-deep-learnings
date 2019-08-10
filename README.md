@@ -52,6 +52,12 @@ Transfer learning in NLP : Fine tuning a pretrained language model (e.g. WikiTex
 
 2. Generative Adversarial Networks (GANs)
 
+## Core/Foundational from scratch
+
+1. Linear Algebra
+2. Broadcasting
+3. Matrix/Tensor Multiplication
+
 ## Frameworks used :
 
 1. PyTorch
