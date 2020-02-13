@@ -1,9 +1,8 @@
 ## eBooks
 
-1. fast.ai ebook
-2. 100 page machine learning book
+1. fast.ai ebook (upcoming)
+2. The Hundred Page Machine Learning book
 3. d2l
-4. lil'log
 
 ## Blogs
 
