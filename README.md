@@ -5,6 +5,10 @@ Repository to keep track of my exploration, experiments and learnings.
 - Delving into the theory : Original paper(s) (if available), relevant cited works and blogs.
 - Code implementation of the ideas.
 
+## Papers 📑
+
+A collection of seminal research papers are collected under `papers`.
+
 ## Computer Vision 👁️
 
 ### Architectures
