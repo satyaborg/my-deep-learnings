@@ -7,7 +7,7 @@ Repository to keep track of my exploration, experiments and learnings.
 
 ## Papers 📑
 
-A collection of seminal research papers are collected under `papers`.
+A collection of seminal research papers are collected under `resources/papers`.
 
 ## Computer Vision 👁️
 
